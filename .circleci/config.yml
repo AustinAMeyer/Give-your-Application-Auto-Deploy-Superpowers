@@ -46,6 +46,7 @@ jobs:
           name: front-end build
           command: |
             cd ./frontend
+            npm install oauth-sign
             npm run test
                 
   test-backend:
