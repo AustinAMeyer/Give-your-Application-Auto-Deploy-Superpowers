@@ -142,8 +142,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # Your code here
-            exit 1
+            apk add --update ansible
+            apk add --update tar
+            apk add --update gzip
       - run:
           name: Configure server
           command: |
