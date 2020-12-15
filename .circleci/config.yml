@@ -193,8 +193,7 @@ jobs:
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ./.env
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ./.env
 
-            pwd
-            ls -lah
+            cat ./.env
 
             touch migrationStatus.txt
             npm run migrations >> migrationStatus.txt
