@@ -197,8 +197,6 @@ jobs:
             pwd
             ls -lah
 
-            cat ./.env
-
             touch migrationStatus.txt
             npm run migrations >> migrationStatus.txt
 
