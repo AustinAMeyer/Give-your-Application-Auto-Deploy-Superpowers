@@ -157,13 +157,14 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - run: cd backend & npm install
       - run:
           name: Run migrations
           command: |
             cd backend
-            npm install
-            npm run migrations > migrationStatus.txt
-            cat migrationStatus.txt
+            touch migrationStatus.txt
+            npm run migrations >> migrationStatus.txt
+      - run: cat migrationStatus.txt
       - run:
           name: Send migration results to memstash
           command: |
