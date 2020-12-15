@@ -168,6 +168,9 @@ jobs:
             cd ./backend 
             touch .env
 
+            pwd
+            ls -lah
+            
             echo ENVIROMENT=$ENVIROMENT >> "backend/.env"
             echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> "backend/.env"
             echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> "backend/.env"
