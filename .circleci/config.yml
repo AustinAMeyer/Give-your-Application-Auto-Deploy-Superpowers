@@ -161,7 +161,8 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cd backend & touch .env
+            cd backend 
+            touch .env
 
             echo ENVIROMENT=$ENVIROMENT >> "backend/.env"
             echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> "backend/.env"
