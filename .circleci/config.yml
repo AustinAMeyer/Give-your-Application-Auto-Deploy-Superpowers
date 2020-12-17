@@ -166,7 +166,6 @@ jobs:
           command: |
             cd ./backend 
             touch .env
-
             pwd
             ls -lah
 
