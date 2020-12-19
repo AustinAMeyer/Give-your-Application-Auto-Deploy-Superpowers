@@ -222,7 +222,7 @@ jobs:
             cd ./frontend
             npm install
             npm run build
-            aws s3 cp ./frontend/dist s3://udapeople-"${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+            aws s3 cp ./dist s3://udapeople-"${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       # Here's where you will add some code to rollback on failure   
 
   deploy-backend:
@@ -244,7 +244,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            cd ./.circleci/ansible/i
+            cd ./.circleci/ansible
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt deploy-backend.yml
       # Here's where you will add some code to rollback on failure  
       
