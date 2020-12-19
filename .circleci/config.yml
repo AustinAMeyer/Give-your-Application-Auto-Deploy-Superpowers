@@ -240,7 +240,9 @@ jobs:
             apk add --update ansible
             apk add --update tar
             apk add --update gzip
-            apk add openssh-client
+            apk add --update curl
+            apk add --update openssh-client
+            apk add --update npm
       - run:
           name: Deploy backend
           command: |
