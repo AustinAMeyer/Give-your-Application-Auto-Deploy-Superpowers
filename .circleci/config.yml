@@ -200,14 +200,14 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace:
-          at: .circleci/ansible/
       - run:
           name: Install dependencies
           command: |
             yum -y install nodejs
             yum -y install tar 
             yum -y install gzip
+      - attach_workspace:
+          at: .circleci/ansible/
       - run:
           name: Get backend url
           command: |
@@ -238,6 +238,7 @@ jobs:
             apk add --update ansible
             apk add --update tar
             apk add --update gzip
+            apk add openssh-client
       - run:
           name: Deploy backend
           command: |
