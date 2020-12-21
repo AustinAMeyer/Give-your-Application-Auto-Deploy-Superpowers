@@ -293,14 +293,11 @@ jobs:
             apk add --update gzip
             apk add --update curl
       - run:
-          name: Get backend url
+          name: Get Backend IP and Backend smoke test.
           command: |
             BACKEND_IP=`cat ./.circleci/ansible/IP.txt`
             echo $BACKEND_IP
-      - run:
-          name: Backend smoke test.
-          command: |
-            URL="http://${BACKEND_IP}:3030/api/status"
+            URL="http://$BACKEND_IP:3030/api/status"
             echo $URL
             curl -s $URL
       - run:
