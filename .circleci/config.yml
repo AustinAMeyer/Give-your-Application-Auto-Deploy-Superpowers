@@ -5,21 +5,30 @@ commands:
     description: Destroy frontend and backendcloudformation stacks as well as delete s3 bucket files
     steps:
       - run:
+          name: Install AWS CLI
+          when: on_fail
+          command: |
+            pip install awscli
+      - run:
           name: Remove S3 files
           when: on_fail
-          command: aws s3 rm s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+          command: |
+            aws s3 rm s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - run:
           name: Delete S3 bucket
           when: on_fail
-          command: aws s3 rb s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} --force
+          command: |
+            aws s3 rb s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} --force
       - run:
           name: Destroy frontend
           when: on_fail
-          command: aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
       - run:
           name: Destroy frontend
           when: on_fail
-          command: aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow. 
@@ -290,22 +299,6 @@ jobs:
           fingerprints: ["db:ea:3b:41:c5:b3:48:33:e1:1f:11:98:ae:1d:d9:24"]
       - attach_workspace:
           at: .circleci/ansible/
-      # - run:
-      #     name: Set Enviroment variables 
-      #     command: |
-      #       cd ./backend 
-      #       touch .env
-
-      #       echo ENVIROMENT=$ENVIROMENT >> ./.env
-      #       echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ./.env
-      #       echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ./.env
-      #       echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ./.env
-      #       echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ./.env
-      #       echo TYPEORM_HOST=$TYPEORM_HOST >> ./.env
-      #       echo TYPEORM_PORT=$TYPEORM_PORT >> ./.env
-      #       echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ./.env
-      #       echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ./.env
-      #       echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ./.env
       - run:
           name: Install dependencies
           command: |
