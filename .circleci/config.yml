@@ -362,10 +362,33 @@ jobs:
             then
               return 1
             else
-              return 1
+              return 0
             fi
       - revert-migrations
-      - destroy-environment    
+      - destroy-environment   
+
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum -y install tar 
+            yum -y install gzip
+            curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
+            yum -y install nodejs
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+            --template-file cloudfront.yml \
+            --stack-name udapeople-production-${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter-overrides PipelineID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --tags "Key=Name,Value=Udapeople-production-${CIRCLE_WORKFLOW_ID:0:7}"
+      # - revert-migrations
+      # - destroy-environment  
 
 workflows:
   default:
