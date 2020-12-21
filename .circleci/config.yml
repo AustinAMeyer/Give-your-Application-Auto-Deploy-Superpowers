@@ -222,10 +222,13 @@ jobs:
             cd ./frontend
             npm install
             npm run build
-#aws s3 cp ./dist s3://udapeople-frontend-"${CIRCLE_WORKFLOW_ID:0:7}" --recursive
-#Uncomment the ^^^^ once I am ready for testing the next stage
+            aws s3 cp ./dist s3://udapeople-frontend-"${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       # Here's where you will add some code to rollback on failure   
+      ######################################################################
+      ######################################################################
       # Need to grab the URL from the s3 bucket once I am on the final build
+      ######################################################################
+      ######################################################################
   deploy-backend:
     docker:
       - image: "python:3.7-alpine3.11"
