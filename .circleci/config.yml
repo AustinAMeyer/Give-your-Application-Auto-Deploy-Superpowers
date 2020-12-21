@@ -287,7 +287,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            curl "http://${BACKEND_IP}:3030/api/status"
+            curl -s "http://${BACKEND_IP}:3030/api/status"
       - run:
           name: Frontend smoke test.
           command: |
@@ -296,7 +296,7 @@ jobs:
             then
               return 1
             else
-              return 0
+              return 1
             fi
       # Here's where you will add some code to rollback on failure      
 
