@@ -391,13 +391,10 @@ jobs:
             --no-paginate \
             --output text > ./.circleci/ansible/originalWorkflowID.txt
 
-            cat originalWorkflowID.txt
-
-            originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
-
-            echo $originalWorkflowID
-
             if [ -n "$originalWorkflowID" ]; then
+              cat originalWorkflowID.txt
+              originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
+              echo $originalWorkflowID
               StackOption=update-stack
               StackName=udapeople-$originalWorkflowID
             else
