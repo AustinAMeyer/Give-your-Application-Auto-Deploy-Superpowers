@@ -8,7 +8,11 @@ commands:
           name: Install AWS CLI
           when: on_fail
           command: |
+            if AWS --version; then
+            echo "AWS CLI isntalled"
+            else
             pip install awscli
+            fi
       - run:
           name: Remove S3 files
           when: on_fail
