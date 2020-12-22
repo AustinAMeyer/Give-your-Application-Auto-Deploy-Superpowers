@@ -371,7 +371,7 @@ jobs:
       - revert-migrations
       - destroy-environment   
 
-  cloudfront-update:
+  cloudfront-update_or_create:
     docker:
       - image: amazon/aws-cli
     steps:
@@ -381,8 +381,6 @@ jobs:
           command: |
             yum -y install tar 
             yum -y install gzip
-            curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
-            yum -y install nodejs
       - run:
           name: Update cloudfront stack
           command: |
@@ -391,9 +389,15 @@ jobs:
             --no-paginate \
             --output text > ./.circleci/ansible/originalWorkflowID.txt
 
-            if [ -n "$originalWorkflowID" ]; then
+            if [ -s "./.circleci/ansible/originalWorkflowID.txt" ]; then
               cat originalWorkflowID.txt
               originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
+            else
+              echo "New stack will be created"
+            fi
+
+            if [ -n "$originalWorkflowID" ]; then
+              
               echo $originalWorkflowID
               StackOption=update-stack
               StackName=udapeople-$originalWorkflowID
@@ -419,6 +423,11 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum -y install tar 
+            yum -y install gzip
       - attach_workspace:
           at: .circleci/ansible/
       - run:
@@ -456,6 +465,10 @@ workflows:
           requires: [build-frontend]
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only:
+                - master
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:
