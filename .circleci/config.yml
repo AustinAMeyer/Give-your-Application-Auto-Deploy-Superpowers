@@ -390,7 +390,7 @@ jobs:
             --output text > ./.circleci/ansible/originalWorkflowID.txt
 
             if [ -s "./.circleci/ansible/originalWorkflowID.txt" ]; then
-              cat originalWorkflowID.txt
+              cat ./.circleci/ansible/originalWorkflowID.txt
               originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
             else
               echo "New stack will be created"
