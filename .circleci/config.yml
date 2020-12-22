@@ -20,12 +20,12 @@ commands:
           command: |
             aws s3 rb s3://udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} --force
       - run:
-          name: Destroy frontend
+          name: Delete frontend stack
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
       - run:
-          name: Destroy backend
+          name: Delete backend stack
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
@@ -34,7 +34,7 @@ commands:
     description: Revert the last migration if successfully run in the current workflow. 
     steps:
       - run:
-          name: Revert migrations
+          name: Revert database migrations
           # Add when this will run
           command: |
             migrationSuccess=$(curl -H "token: ${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -73,7 +73,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: Back-end build
+          name: Build Backend
           command: |
             cd ./backend
             npm i
@@ -90,7 +90,7 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: front-end test
+          name: Test frontend
           command: |
             cd ./frontend
             npm install
@@ -105,7 +105,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: back-end test
+          name: test backend
           command: |
             cd ./backend
             npm run test
@@ -118,7 +118,7 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: front-end scan
+          name: Scan frontend
           command: |
             cd ./frontend
             npm audit --audit-level=critical
@@ -131,7 +131,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]
       - run:
-          name: back-end scan
+          name: Scan backend
           command: |
             cd ./backend
             npm audit --audit-level=critical
@@ -150,7 +150,7 @@ jobs:
           name: Ensure back-end infrastructure exists
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
+              --template-file file://./.circleci/files/backend.yml \
               --tags project=udapeople-backend \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
@@ -158,7 +158,7 @@ jobs:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
+              --template-file file://./.circleci/files/frontend.yml \
               --tags project=udapeople-frontend \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
@@ -172,7 +172,7 @@ jobs:
             --output text >> ./.circleci/ansible/inventory.txt
             cat ./.circleci/ansible/inventory.txt
       - run:
-          name: Add back-end ip only to IP.txt
+          name: Add back-end ip only to IP file for later use
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
@@ -273,8 +273,8 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            BACKEND_IP=`cat ./.circleci/ansible/IP.txt`
-            export API_URL="http://${BACKEND_IP}:3030"
+            backendIP=`cat ./.circleci/ansible/IP.txt`
+            export API_URL="http://${backendIP}:3030"
             echo "${API_URL}"
       - run:
           name: Deploy frontend objects
@@ -348,8 +348,8 @@ jobs:
       - run:
           name: Get Backend IP and Backend smoke test.
           command: |
-            BACKEND_IP=`cat ./.circleci/ansible/IP.txt`
-            echo $BACKEND_IP
+            backendIP=`cat ./.circleci/ansible/IP.txt`
+            echo $backendIP
             sleep 20
             URL="http://$BACKEND_IP:3030/api/status"
             echo $URL
@@ -382,13 +382,13 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
-            aws cloudformation deploy \
-            --template-file file://./.circleci/files/cloudfront.yml \
+            aws cloudformation create-stack \
             --stack-name udapeople-production-${CIRCLE_WORKFLOW_ID:0:7} \
+            --template-file file://./.circleci/files/cloudfront.yml \
             --parameter-overrides PipelineID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
             --tags "Key=Name,Value=Udapeople-production-${CIRCLE_WORKFLOW_ID:0:7}"
-      # - revert-migrations
-      # - destroy-environment  
+       - revert-migrations
+       - destroy-environment  
 
 workflows:
   default:
