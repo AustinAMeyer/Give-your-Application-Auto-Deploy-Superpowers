@@ -8,10 +8,10 @@ commands:
           name: Install AWS CLI
           when: on_fail
           command: |
-            if AWS --version; then
-            echo "AWS CLI isntalled"
-            else
+            if ! [ -x "$(command -v aws)" ]; then
             pip install awscli
+            else
+            echo "AWS CLI isntalled"
             fi
       - run:
           name: Remove S3 files
@@ -389,7 +389,7 @@ jobs:
             aws cloudformation create-stack \
             --stack-name udapeople-production-${CIRCLE_WORKFLOW_ID:0:7} \
             --template-body ./.circleci/files/cloudfront.yml \
-            --parameter parameterKey=Name,parametersValue=udapeople-${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter ParameterKey=Name,ParametersValue=udapeople-${CIRCLE_WORKFLOW_ID:0:7} \
             --tags Key=Name,Value=Udapeople-production-${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations
       - destroy-environment  
