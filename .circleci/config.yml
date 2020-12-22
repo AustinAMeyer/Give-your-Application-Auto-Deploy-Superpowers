@@ -17,29 +17,32 @@ commands:
           name: Remove S3 files
           when: on_fail
           command: |
-            aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} \
+            --recursive
       - run:
           name: Delete S3 bucket
           when: on_fail
           command: |
-            aws s3 rb s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --force
+            aws s3 rb s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} \
+            --force
       - run:
           name: Delete frontend stack
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack \
+            --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
       - run:
           name: Delete backend stack
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack \
+            --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow. 
     steps:
       - run:
           name: Revert database migrations
-          # Add when this will run
           command: |
             migrationSuccess=$(curl -H "token: ${CIRCLE_WORKFLOW_ID:0:7}" \
             --request GET https://api.memstash.io/values/migration_status_${CIRCLE_WORKFLOW_ID})          
@@ -222,27 +225,27 @@ jobs:
           command: |
             cd ./backend
             npm install
+      # - run:
+      #     name: Run migrations
+      #     command: |
+      #       cd ./backend 
+      #       touch .env
 
+      #       echo ENVIROMENT=$ENVIROMENT >> ./.env
+      #       echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ./.env
+      #       echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ./.env
+      #       echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ./.env
+      #       echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ./.env
+      #       echo TYPEORM_HOST=$TYPEORM_HOST >> ./.env
+      #       echo TYPEORM_PORT=$TYPEORM_PORT >> ./.env
+      #       echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ./.env
+      #       echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ./.env
+      #       echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ./.env
       - run:
           name: Run migrations
           command: |
-            cd ./backend 
-            touch .env
-
-            echo ENVIROMENT=$ENVIROMENT >> ./.env
-            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> ./.env
-            echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> ./.env
-            echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> ./.env
-            echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> ./.env
-            echo TYPEORM_HOST=$TYPEORM_HOST >> ./.env
-            echo TYPEORM_PORT=$TYPEORM_PORT >> ./.env
-            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ./.env
-            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ./.env
-            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ./.env
-
             touch migrationStatus.txt
             npm run migrations >> migrationStatus.txt
-            
       - run:
           name: Send migration results to memstash
           command: |
@@ -294,6 +297,7 @@ jobs:
       # Need to grab the URL from the s3 bucket once I am on the final build
       ######################################################################
       ######################################################################
+
   deploy-backend:
     docker:
       - image: "python:3.7-alpine3.11"
@@ -327,7 +331,6 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ./.env
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> ./.env
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> ./.env
-     
       - run:
           name: Deploy backend
           command: |
@@ -389,15 +392,16 @@ jobs:
             --no-paginate \
             --output text > ./.circleci/ansible/originalWorkflowID.txt
 
-            if [ -s "./.circleci/ansible/originalWorkflowID.txt" ]; then
+            if [ -s "./.circleci/ansible/originalWorkflowID.txt" ]
+            then
               cat ./.circleci/ansible/originalWorkflowID.txt
               originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
             else
               echo "New stack will be created"
             fi
 
-            if [ -n "$originalWorkflowID" ]; then
-              
+            if [ -n "$originalWorkflowID" ]
+            then
               echo $originalWorkflowID
               StackOption=update-stack
               StackName=udapeople-$originalWorkflowID
@@ -437,7 +441,8 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
-            if [ -n "$originalWorkflowID" ]; then
+            if [ -n "$originalWorkflowID" ]
+            then
               aws s3 rm s3://udapeople-$originalWorkflowID --recursive
               aws s3 rb s3://udapeople-$originalWorkflowID --force
               aws cloudformation delete-stack --stack-name udapeople-frontend-$originalWorkflowID
