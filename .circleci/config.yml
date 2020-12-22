@@ -351,7 +351,7 @@ jobs:
             backendIP=`cat ./.circleci/ansible/IP.txt`
             echo $backendIP
             sleep 20
-            URL="http://$BACKEND_IP:3030/api/status"
+            URL="http://$backendIP:3030/api/status"
             echo $URL
             curl -s $URL
       - run:
