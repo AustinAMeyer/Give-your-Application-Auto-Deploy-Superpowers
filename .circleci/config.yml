@@ -46,7 +46,7 @@ commands:
           command: |
             migrationSuccess=$(curl -H "token: ${CIRCLE_WORKFLOW_ID:0:7}" \
             --request GET https://api.memstash.io/values/migration_status_${CIRCLE_WORKFLOW_ID})          
-            if ($migrationSuccess==1)
+            if [[ $migrationSuccess==1 ]]
             then
               cd /home/circleci/project/backend
               npm install
@@ -435,7 +435,7 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            $originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
+            originalWorkflowID=`cat ./.circleci/ansible/originalWorkflowID.txt`
       - run:
           name: Remove old stacks and files
           command: |
