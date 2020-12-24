@@ -11,7 +11,7 @@ commands:
             if ! [ -x "$(command -v aws)" ]; then
             pip install awscli
             else
-            echo "AWS CLI installed"
+            echo "AWS CLI already installed"
             fi
       - run:
           name: Remove S3 files
