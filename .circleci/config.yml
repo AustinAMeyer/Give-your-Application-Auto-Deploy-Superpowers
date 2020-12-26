@@ -280,21 +280,20 @@ jobs:
           command: |
             backendIP=`cat ./.circleci/ansible/IP.txt`
             export API_URL="http://${backendIP}:3030"
-            echo "${API_URL}"
+            cd ./frontend
+            touch ./.env
+            echo API_URL=$API_URL >> ./.env
+            echo $API_URL
       - run:
           name: Deploy frontend objects
           command: |
+            npm install webpack-dev-server -g
             cd ./frontend
             npm install
             npm run build
             aws s3 cp ./dist s3://udapeople-"${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       - revert-migrations
       - destroy-environment
-      #######################################################################
-      #######################################################################
-      # Need to grab the URL from the s3 bucket once I am on the final build
-      #######################################################################
-      #######################################################################
 
   deploy-backend:
     docker:
@@ -446,6 +445,8 @@ jobs:
             else
               echo "No old workflow exists"
             fi 
+      - revert-migrations
+      - destroy-environment
 
 workflows:
   default:
