@@ -29,17 +29,33 @@ For your submission, please submit the following:
   1. Public URL to your Prometheus Server [URL05]
 - Your screenshots in JPG or PNG format, named using the screenshot number listed in the instructions. These screenshots should be included in your code repository in the root folder.
   1. Job failed because of compile errors. [SCREENSHOT01]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT01.png "SCREENSHOT01")
   1. Job failed because of unit tests. [SCREENSHOT02]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT02-1.png "SCREENSHOT02-1")
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT02-2.png "SCREENSHOT02-2")
   1. Job that failed because of vulnerable packages. [SCREENSHOT03]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT03.png "SCREENSHOT03")
   1. An alert from one of your failed builds. [SCREENSHOT04]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT04.png "SCREENSHOT04")
   1. Appropriate job failure for infrastructure creation. [SCREENSHOT05]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT05.png "SCREENSHOT05")
   1. Appropriate job failure for the smoke test job. [SCREENSHOT06]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT06.png "SCREENSHOT06")
   1. Successful rollback after a failed smoke test. [SCREENSHOT07]  
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT07-1.png "SCREENSHOT07-1")
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT07-2.png "SCREENSHOT07-2")
   1. Successful promotion job. [SCREENSHOT08]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT08.png "SCREENSHOT08")
   1. Successful cleanup job. [SCREENSHOT09]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT09.png "SCREENSHOT09")
   1. Only deploy on pushed to `master` branch. [SCREENSHOT10]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT10.png "SCREENSHOT10")
   1. Provide a screenshot of a graph of your EC2 instance including available memory, available disk space, and CPU usage. [SCREENSHOT11]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT11-1.png "SCREENSHOT11-1")
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT11-2.png "SCREENSHOT11-2")
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT11-3.png "SCREENSHOT11-3")
   1. Provide a screenshot of an alert that was sent by Prometheus. [SCREENSHOT12]
+  ![picture alt](https://github.com/AustinAMeyer/Give-your-Application-Auto-Deploy-Superpowers/blob/master/Screenshots/SCREENSHOT12.png "SCREENSHOT12")
 
 - Your presentation should be in PDF format named "presentation.pdf" and should be included in your code repository root folder. 
 
