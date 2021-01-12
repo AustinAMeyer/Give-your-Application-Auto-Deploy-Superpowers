@@ -19,6 +19,8 @@ In this project, you will prove your mastery of the following learning objective
 
 ### Project Submission
 
+Here is the [rubric](https://review.udacity.com/#!/rubrics/2834/view) for this project.
+
 For your submission, please submit the following:
 
 - A text file named `urls.txt` including:
